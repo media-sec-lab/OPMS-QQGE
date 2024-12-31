@@ -1,0 +1,123 @@
+{
+  "task": "drunet",
+  "model": "plain",
+  "gpu_ids": [
+    1
+  ],
+  "scale": 1,
+  "n_channels": 1,
+  "sigma": [
+    0,
+    50
+  ],
+  "sigma_test": 25,
+  "path": {
+    "root": "dejpeg75",
+    "pretrained_netG": null,
+    "pretrained_netE": "/data/liuxulong/pycharm/others/KAIR-master/model_zoo/drunet_deblocking_grayscale.pth",
+    "task": "dejpeg75/drunet",
+    "log": "dejpeg75/drunet",
+    "options": "dejpeg75/drunet/options",
+    "models": "dejpeg75/drunet/models",
+    "images": "dejpeg75/drunet/images",
+    "pretrained_optimizerG": null
+  },
+  "datasets": {
+    "train": {
+      "name": "train_dataset",
+      "dataset_type": "jpeg",
+      "dataroot_H": "trainsets/trainH_subset",
+      "dataroot_L": null,
+      "H_size": 128,
+      "quality_factor": 75,
+      "quality_factor_test": 75,
+      "is_color": false,
+      "dataloader_shuffle": true,
+      "dataloader_num_workers": 8,
+      "dataloader_batch_size": 64,
+      "n_channels": 1,
+      "phase": "train",
+      "scale": 1
+    },
+    "test": {
+      "name": "test_dataset",
+      "dataset_type": "jpeg",
+      "dataroot_H": "testsets/test_subset",
+      "dataroot_L": null,
+      "quality_factor": 75,
+      "quality_factor_test": 75,
+      "is_color": false,
+      "n_channels": 1,
+      "phase": "test",
+      "scale": 1
+    }
+  },
+  "netG": {
+    "net_type": "drunet",
+    "in_nc": 1,
+    "out_nc": 1,
+    "nc": [
+      64,
+      128,
+      256,
+      512
+    ],
+    "nb": 4,
+    "gc": 32,
+    "ng": 2,
+    "reduction": 16,
+    "act_mode": "R",
+    "upsample_mode": "convtranspose",
+    "downsample_mode": "strideconv",
+    "bias": false,
+    "init_type": "orthogonal",
+    "init_bn_type": "uniform",
+    "init_gain": 0.2,
+    "scale": 1
+  },
+  "train": {
+    "G_lossfn_type": "l1",
+    "G_lossfn_weight": 1.0,
+    "G_optimizer_type": "adam",
+    "G_optimizer_lr": 0.0001,
+    "G_optimizer_clipgrad": null,
+    "G_scheduler_type": "MultiStepLR",
+    "G_scheduler_milestones": [
+      50000,
+      100000,
+      150000,
+      200000
+    ],
+    "G_scheduler_gamma": 0.5,
+    "G_regularizer_orthstep": null,
+    "G_regularizer_clipstep": null,
+    "checkpoint_test": 2500,
+    "checkpoint_save": 2500,
+    "checkpoint_print": 200,
+    "F_feature_layer": 34,
+    "F_weights": 1.0,
+    "F_lossfn_type": "l1",
+    "F_use_input_norm": true,
+    "F_use_range_norm": false,
+    "G_optimizer_betas": [
+      0.9,
+      0.999
+    ],
+    "G_scheduler_restart_weights": 1,
+    "G_optimizer_wd": 0,
+    "G_optimizer_reuse": false,
+    "G_param_strict": true,
+    "E_param_strict": true,
+    "E_decay": 0
+  },
+  "opt_path": "options/train_drunet.json",
+  "is_train": true,
+  "merge_bn": false,
+  "merge_bn_startpoint": -1,
+  "find_unused_parameters": true,
+  "use_static_graph": false,
+  "dist": false,
+  "num_gpu": 1,
+  "rank": 0,
+  "world_size": 1
+}

@@ -1,0 +1,5 @@
+训练:
+KAIR-master：main_train_drunet.py; options/train_drunet.json配置
+去块：
+将训好的模型KAIR-master/model_zoo/移入DRIR-master/model_zoo
+修改main_dpir_deblocking_grayscale.py参数
